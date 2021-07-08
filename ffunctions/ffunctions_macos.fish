@@ -86,15 +86,6 @@ end
 
 funcsave find_quarantined_at
 
-# SEE: https://git.io/Jc9vp
-# function nerd_font_patch_with \
-#     --argument-names regex \
-#     --description "Nerd Font patch the fonts under the given directory."
-#     # ./font-patcher $f
-# end
-
-# funcsave nerd_font_patch_with
-
 function ligaturize_fonts_at \
     --argument-names path \
     --description "Ligaturize the fonts under the given directory."
@@ -125,6 +116,15 @@ function ligaturize_fonts_at \
 end
 
 funcsave ligaturize_fonts_at
+
+# SEE: https://git.io/Jc9vp
+# function nerd_font_patch_with \
+#     --argument-names regex \
+#     --description "Nerd Font patch the fonts under the given directory."
+#     # ./font-patcher $f
+# end
+
+# funcsave nerd_font_patch_with
 
 # TODO: refactor into more utility functions:
 # function rename \
