@@ -255,7 +255,6 @@ funcsave get_port_listeners
 
 function get_os \
     --description "Get the current OS."
-
     $HOME/.config/fish/bash/get_os.bash
 end
 
@@ -264,9 +263,7 @@ funcsave get_os
 function own \
     --argument-names resource \
     --description "Take ownership of a file or folder (and its contents)."
-
     set -l file (basename $resource)
-
     printf %b "=> Taking ownership of $file...\n"
     sudo chown -R (id -u):(id -g) $resource
     printf %b "=> Done: sudo chown -R (id -u):(id -g) $file\n"
@@ -274,8 +271,9 @@ end
 
 funcsave own
 
-function num_parallel_tasks
-    # num_of_cpu * cores_per_cpu * threads_per_core
+function num_parallel_tasks \
+    --description "Gets the optimal number of tasks that can be run in parallel on the machine."
+    # Formula: num_of_cpu * cores_per_cpu * threads_per_core
     set -l cpu_count 1
     set -l core_count (sysctl -n machdep.cpu.core_count)
     set -l thread_count (sysctl -n machdep.cpu.thread_count)
@@ -286,6 +284,17 @@ function num_parallel_tasks
 end
 
 funcsave num_parallel_tasks
+
+function clone_perms \
+    --argument-names ref dest \
+    --description "Copies permissions from the \$ref resource over to the \$dest resource."
+    printf %b "=> Cloning permissions from $ref to $dest...\n"
+    chmod --reference=$ref $dest
+    sudo chown --reference=$ref $dest
+    printf %b "=> Done: chmod --reference=$ref $dest\n"
+end
+
+funcsave clone_perms
 
 # TODO abbreviation
 # function open_ssh_tun_to \

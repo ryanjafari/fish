@@ -1,5 +1,5 @@
-function num_parallel_tasks
-    # num_of_cpu * cores_per_cpu * threads_per_core
+function num_parallel_tasks --description 'Gets the optimal number of tasks that can be run in parallel on the machine.'
+    # Formula: num_of_cpu * cores_per_cpu * threads_per_core
     set -l cpu_count 1
     set -l core_count (sysctl -n machdep.cpu.core_count)
     set -l thread_count (sysctl -n machdep.cpu.thread_count)
