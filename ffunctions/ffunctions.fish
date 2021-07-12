@@ -231,7 +231,7 @@ function get_random_port \
 
             echo $port
         case linux
-            $HOME/.config/fish/bash/get_random_port.bash
+            $HOME/.config/fish/scripts/bash/get_random_port.bash
         case '*'
     end
 end
@@ -255,7 +255,7 @@ funcsave get_port_listeners
 
 function get_os \
     --description "Get the current OS."
-    $HOME/.config/fish/bash/get_os.bash
+    $HOME/.config/fish/scripts/bash/get_os.bash
 end
 
 funcsave get_os
@@ -285,16 +285,22 @@ end
 
 funcsave num_parallel_tasks
 
-function clone_perms \
+function clone_access \
     --argument-names ref dest \
     --description "Copies permissions from the \$ref resource over to the \$dest resource."
     printf %b "=> Cloning permissions from $ref to $dest...\n"
-    chmod --reference=$ref $dest
-    sudo chown --reference=$ref $dest
-    printf %b "=> Done: chmod --reference=$ref $dest\n"
+
+    set -l savemod_pbits (stat --format "%a" $ref)
+    set -l saveown_user (stat --format "%U" $ref)
+    set -l saveown_group (stat --format "%G" $ref)
+
+    sudo chmod -h $savemod_pbits $dest
+    sudo chown -h $saveown_user:$saveown_group $dest
+    printf %b "=> Done: sudo chmod -h $savemod_pbits $dest\n"
+    printf %b "=> Done: sudo chown -h $saveown_user:$saveown_group $dest\n"
 end
 
-funcsave clone_perms
+funcsave clone_access
 
 # TODO abbreviation
 # function open_ssh_tun_to \

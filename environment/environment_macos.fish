@@ -33,6 +33,10 @@ set -x U2_ROOT "$MOUNT_ROOT/u2"
 set -x FISH_CONFIG_ROOT "$U2_ROOT/fish"
 #set -x KUBE_CONFIG_ROOT "$U2_ROOT/kube"
 
+# Add individual binaries to path via my
+# custom symlinks in $HOME:
+fish_add_path $HOME/.bin
+
 # Prioritize Homebrew installed binaries in Path:
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
@@ -46,7 +50,10 @@ fish_add_path /opt/homebrew/opt/python/libexec/bin
 
 fish_add_path /opt/homebrew/opt/grep/libexec/gnubin
 fish_add_path /opt/homebrew/opt/make/libexec/gnubin
-fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
+# TODO: need macos chmod
+# TODO: has stat?
+# fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
+fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin/stat
 fish_add_path /opt/homebrew/opt/gnu-tar/libexec/gnubin
 
 fish_add_path /opt/homebrew/opt/ssh-copy-id/bin
