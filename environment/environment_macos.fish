@@ -67,7 +67,7 @@ fish_add_path /opt/homebrew/opt/unzip/bin
 fish_add_path $HOME/samba/bin
 
 # SSH Config Editor config:
-# set -x SSH_AUTH_SOCK "/Users/ryanjafari/Library/Containers/org.hejki.osx.sshce.agent/Data/socket.ssh"
+set -x SSH_AUTH_SOCK /Users/ryanjafari/Library/Containers/org.hejki.osx.sshce.agent/Data/socket.ssh
 
 # VS Code as editor when terminal needs one:
 set -x EDITOR /opt/homebrew/bin/code
