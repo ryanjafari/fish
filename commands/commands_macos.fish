@@ -1,3 +1,5 @@
 #!/usr/bin/env fish
 
-printf %b "=> Loading macOS-specific commands...\n"
+if status is-interactive
+    printf %b "=> Loading macOS-specific commands...\n"
+end

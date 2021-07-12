@@ -1,8 +1,6 @@
 #!/usr/bin/env fish
 
-# TODO: make ~/.config/fish a workspace?
 # TODO: check permissions on and under ~/.config/fish
-# TODO: version ~/.config/fish with GitHub
 
 # Get the current OS:
 set -g os (get_os)

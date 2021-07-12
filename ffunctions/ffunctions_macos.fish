@@ -1,6 +1,8 @@
 #!/usr/bin/env fish
 
-printf %b "=> Loading macOS-specific functions...\n"
+if status is-interactive
+    printf %b "=> Loading macOS-specific functions...\n"
+end
 
 function get_bundleid_for \
     --argument-names macos_app \

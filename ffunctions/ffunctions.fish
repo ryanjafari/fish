@@ -1,6 +1,8 @@
 #!/usr/bin/env fish
 
-printf %b "=> Loading cross-OS functions...\n"
+if status is-interactive
+    printf %b "=> Loading cross-OS functions...\n"
+end
 
 # Docker:
 
@@ -201,6 +203,7 @@ function ports_used \
     --description "Find all ports in use."
 
     #netstat -tulpn | grep LISTEN
+    # TODO: needs fix for macos
     ss -tulpn | grep LISTEN
 end
 
@@ -209,10 +212,46 @@ funcsave ports_used
 function get_random_port \
     --description "Get a random port."
 
-    $HOME/.config/fish/bash/get_random_port.bash
+    # printf %b "=> Getting a random port...\n"
+
+    # TODO: wipe the linux-specific portion?
+    switch $os
+        case macos
+            set -l first (sysctl -n net.inet.ip.portrange.first)
+            set -l last (sysctl -n net.inet.ip.portrange.last)
+            set -l port -1
+
+            # printf %b "\t...between: $first - $last\n"
+
+            while true
+                set port (shuf -i $first-$last -n 1)
+                set -l listeners (get_port_listeners)
+                echo $listeners | grep --quiet ":$port " || break
+            end
+
+            echo $port
+        case linux
+            $HOME/.config/fish/bash/get_random_port.bash
+        case '*'
+    end
 end
 
 funcsave get_random_port
+
+function get_port_listeners \
+    --description "Get a list of all processes listening for a connection on a port."
+
+    set -l listeners (lsof -iTCP -sTCP:LISTEN -P -n | string split "\n")
+    set -l results $listeners[2..-1]
+    set -l number (count $results)
+    # printf %b "$number\n"
+
+    # TODO: print line-by-line
+    # so this is useful itself
+    echo $results
+end
+
+funcsave get_port_listeners
 
 function get_os \
     --description "Get the current OS."
@@ -234,6 +273,31 @@ function own \
 end
 
 funcsave own
+
+function num_parallel_tasks
+    # num_of_cpu * cores_per_cpu * threads_per_core
+    set -l cpu_count 1
+    set -l core_count (sysctl -n machdep.cpu.core_count)
+    set -l thread_count (sysctl -n machdep.cpu.thread_count)
+    set -l threads_per_core (math "$thread_count / $core_count")
+    set -l tasks_count (math "$cpu_count * $core_count * $threads_per_core")
+
+    echo $tasks_count
+end
+
+funcsave num_parallel_tasks
+
+# TODO abbreviation
+# function open_ssh_tun_to \
+#     --argument-names host port \
+#     --description "Opens an SSH tunnel from a random port on localhost to the specified \$host and \$port."
+
+#     set -l rand (get_port)
+
+#     echo ssh -N -L localhost:$rand:$host:$port $host
+# end
+
+# funcsave open_ssh_tun_to
 
 # TODO: ssh_perms_fix function
 # SEE: https://bit.ly/36cg4XT
