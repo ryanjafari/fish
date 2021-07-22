@@ -1,5 +1,6 @@
 #!/opt/home/.local/bin/env /opt/home/.local/bin/bash
 
+# SEE: https://bit.ly/3hXWJAr
 tailf() (
     # args: <file> [<number-of-header-lines>]
     trap 'tput csr 0 "$((LINES-1))"' INT

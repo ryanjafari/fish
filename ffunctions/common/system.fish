@@ -13,7 +13,7 @@ function sys
         log4f --type=d "Invoking with subcommand: $sys_sub"
         if has_arg\? $sys_obj
             log4f --type=d "Invoking \"sys $sys_sub\" with system object: $sys_obj"
-            set --local cmd "sys_$sys_sub\_$sys_obj"
+            set --local cmd "_sys_$sys_sub\_$sys_obj"
             eval $cmd $sys_arg # TODO: exec?
             # TODO: error handling
         else
@@ -28,7 +28,7 @@ function sys
 end
 funcsave sys
 
-function sys_get_cores \
+function _sys_get_cores \
     --argument-names host \
     --description "Get the number of cores for the specified host."
     log4f --type=d "Getting the number of cores for host: \"$host\""
@@ -66,9 +66,9 @@ function sys_get_cores \
 
     echo $num_cores
 end
-funcsave sys_get_cores
+funcsave _sys_get_cores
 
-function sys_get_tasks \
+function _sys_get_tasks \
     --description "Gets the optimal number of tasks that can be run in parallel on the machine."
     # Formula: num_of_cpu * cores_per_cpu * threads_per_core
     set -l cpu_count 1
@@ -79,4 +79,55 @@ function sys_get_tasks \
 
     echo $tasks_count
 end
-funcsave sys_get_tasks
+funcsave _sys_get_tasks
+
+function _sys_get_proc \
+    --argument-names process
+    # --description ""
+    log4f --type=n "Getting process: \"$process\"..."
+
+    set --local proc (ps -ecx -o "pid,command" | grep $process)
+    set proc (strm $proc)
+    set proc (strs " " $proc)
+
+    log4f --var proc
+
+    set --local pid $proc[1]
+    set --local prc $proc[2]
+
+    log4f --type=n "Retrieved process: \"$prc\", with pid: \"$pid\""
+
+    echo $pid
+    echo $prc
+end
+funcsave _sys_get_proc
+
+# TODO: _sys_get_pid
+# 1: start job
+# 2: get pid with above or %last or $last_pid
+# function _sys_get_pid
+#     # set PID (jobs -l | awk '{print $2}') # just get the pid
+#     # jobs -l | read jobid pid cpu state cmd # get all the things
+# end
+# funcsave _sys_get_pid
+
+function _sys_kill_proc \
+    --argument-names process
+    # --description ""
+    set --local proc (_sys_get_proc $process)
+    set --local pid $proc[1]
+    set --local prc $proc[2]
+
+    log4f --type=n "Killing process: \"$prc\", with pid :\"$pid\"..."
+
+    kill --signal KILL $pid
+
+    # TODO: wait pid
+
+    set proc (_sys_get_proc $prc)
+    set pid $proc[1]
+    set prc $proc[2]
+
+    log4f --type=n "Process: \"$prc\" respawned, with pid: \"$pid\""
+end
+funcsave _sys_kill_proc

@@ -4,11 +4,12 @@ alias --save stre "string escape --"
 alias --save strm "string trim"
 alias --save strj "string join --"
 alias --save strr "string repeat"
-# alias --save strs "string split $argv --"
+alias --save strs "string split $argv --"
 alias --save strp "string pad" # OK
 alias --save strl "string length"
 
 # TODO: fish vendor folder?
+# TODO: https://bit.ly/3rsbRcx
 # function str --wraps=string
 #     if set -q argv[1]; and [ $argv[1] = is ]
 #         if not set -q argv[2]

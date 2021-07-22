@@ -1,4 +1,4 @@
-#!/opt/home/.local/bin/env /opt/home/.local/bin/fish
+log4f --type=i "Loading 📂 SMB over SSH functions..."
 
 function smb_ssh_init
     # --argument-names name \
@@ -23,10 +23,10 @@ function smb_ssh_init
 end
 funcsave smb_ssh_init
 
-# # TODO: trap
-# # TODO: env_parallel?
-# # TODO: PARALLEL_SSH_* vars
-
+# TODO: trap
+# TODO: env_parallel?
+# TODO: PARALLEL_SSH_* vars
+# TODO: https://git.io/JlX92
 
 # TODO: open_ssh_tunnel_from_to
 # parallel -S $SERVER1 echo running on ::: $SERVER1
@@ -49,6 +49,5 @@ funcsave smb_ssh_init
 # parallel ./scripts/smb_over_ssh_{}.fish ::: start
 # /opt/homebrew/bin/ssh -tt -vvv -p 22 -N -L localhost:9999:mac-mini-eth.lan:445 ryanjafari@mac-mini-eth-ssh-tun
 # /opt/homebrew/bin/ssh -tt -vvv -p 22 -N -L localhost:9999:mac-mini-eth.lan:445 ryanjafari@mac-mini-eth-ssh-tun
-
 
 # echo "all processes complete"
