@@ -1,5 +1,1 @@
-#!/usr/bin/env fish
-
-if status is-interactive
-    printf %b "=> Loading macOS-specific commands...\n"
-end
+log4f --type=i "Loading 💻 macOS-specific commands..."

@@ -1,12 +1,9 @@
 {
   "folders": [
     {
-      "path": "."
+      "path": ".",
+      "name": "my-fish"
     }
   ],
-  "settings": {
-    "files.associations": {
-      "auto.smb": "shellscript"
-    }
-  }
+  "settings": {}
 }

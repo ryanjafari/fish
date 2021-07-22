@@ -1,34 +1,44 @@
-#!/usr/bin/env fish
-
 # TODO: check permissions on and under ~/.config/fish
+# TODO: check what files are executable
+
+# Set the location of our Fish files:
+# TODO: --local?
+set --global --unpath __FSH_PATH "$HOME/.config/fish"
+set --global --unpath __FNC_PATH "$__FSH_PATH/ffunctions"
+set --global --unpath __COM_PATH "$__FNC_PATH/common"
+
+# Need to load the logger before anything else:
+set --global --unpath __LOG4F_PATH "$__FSH_PATH/logs"
+source "$__COM_PATH/strings.fish"
+source "$__COM_PATH/utility.fish"
+source "$__COM_PATH/log4f/log4f.fish"
+
+# We're going to use a function (get_os) soon, so:
+source "$__COM_PATH/_import.fish"
+
+# Load stuff common to any OS:
+source "$__FSH_PATH/environment/environment.fish"
+source "$__FSH_PATH/aliases.fish"
+source "$__FSH_PATH/prompt.fish"
 
 # Get the current OS:
-set -g os (get_os)
+set --global __OS (get_os)
 
-if status is-interactive
-    printf %b "=> Setting up 🐟 for: $os\n"
-
-    source ~/.config/fish/environment/environment.fish
-    source ~/.config/fish/environment/environment_$os.fish
-    source ~/.config/fish/ffunctions/ffunctions.fish
-    source ~/.config/fish/ffunctions/ffunctions_$os.fish
-    source ~/.config/fish/commands/commands.fish
-    source ~/.config/fish/commands/commands_$os.fish
-    source ~/.config/fish/prompt.fish
-    source ~/.config/fish/aliases.fish
-    # TODO: source ~/.config/fish/abbreviations.fish
-    # SEE: https://bit.ly/3qIzMUE
-
-    printf %b "=> Done: setting up for $os\n"
+set --local int
+if is_terminal
+    set int interactively
 else
-    source ~/.config/fish/environment/environment.fish
-    source ~/.config/fish/environment/environment_$os.fish
-    source ~/.config/fish/ffunctions/ffunctions.fish
-    source ~/.config/fish/ffunctions/ffunctions_$os.fish
-    source ~/.config/fish/commands/commands.fish
-    source ~/.config/fish/commands/commands_$os.fish
-    source ~/.config/fish/prompt.fish
-    source ~/.config/fish/aliases.fish
-    # TODO: source ~/.config/fish/abbreviations.fish
-    # SEE: https://bit.ly/3qIzMUE
+    set int non-interactively
 end
+
+# TODO: -d/--debug, -i/--info...
+# TODO: what happens when --type=i and --var
+log4f --type=i "Setting up 🐟 for $__OS, $int"
+
+source "$__FSH_PATH/environment/environment_$__OS.fish"
+source "$__FSH_PATH/commands/commands_$__OS.fish"
+
+log4f --type=i "Done setting up 🐟 for $__OS, $int"
+
+# log4f --var PATH # order preserved i think
+# log4f --var (env | sort) # order not important

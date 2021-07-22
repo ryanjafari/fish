@@ -1,8 +1,4 @@
-#!/usr/bin/env fish
-
-if status is-interactive
-    printf %b "=> Loading cross-OS prompt...\n"
-end
+log4f --type=i "Loading 🚸 cross-OS prompt..."
 
 # TODO: --on-event fish_prompt
 function fish_prompt
@@ -28,8 +24,9 @@ function fish_prompt
         -priority "root,user,shell-var,dotenv,ssh,host,cwd,cwd-path,git,git-branch,git-status,docker,docker-context,kube,terraform-workspace,time,exit" \
         #-priority "perms,jobs" \
         -shell bare \
-        -shell-var FISH \
+        -shell-var $FISH_VERSION \
         #-static-prompt-indicator \
         -truncate-segment-width 8
     eval $cmd
 end
+funcsave fish_prompt

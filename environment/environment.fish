@@ -1,16 +1,29 @@
-#!/usr/bin/env fish
+log4f --type=i "Loading 🚸 cross-OS environment variables..."
 
-if status is-interactive
-    printf %b "=> Loading cross-OS environment variables...\n"
-end
+# Blank out Fish greeting:
+set --global fish_greeting ""
+
+# Terminal colors & language:
+# TODO: implied --global
+# TODO: debug when set variable
+set --global --export TERM xterm-256color
+set --export LANG "en_US.UTF-8"
 
 # Set the path to the locate database:
-set -x LOCATE_PATH "/var/db/locate.database"
+set --global --export --unpath LOCATE_PATH "/var/db/locate.database"
 
-# Get a random port (at the moment for use with SSH tunneling):
-set -x RAND_PORT (get_port)
-
+# TODO: remember to enable these settings on macOS level:
 # Setup traffic to go through surge on mac-mini-eth.lan:
-set -x https_proxy "http://192.168.3.241:6152"
-set -x http_proxy "http://192.168.3.241:6152"
-set -x all_proxy "socks5://192.168.3.241:6153"
+# set --local proxy (true)
+# if $proxy
+#     set --export https_proxy "http://192.168.3.241:6152"
+#     set --export http_proxy "http://192.168.3.241:6152"
+#     set --export all_proxy "socks5://192.168.3.241:6153"
+# else
+#     set --erase https_proxy
+#     set --export http_proxy
+# end
+
+# Setup FISH shell variable for powerline-go:
+# set --local fish_version (get_version (fish -v))
+# set --global --export __FISH_VERSION "🐟$fish_version"

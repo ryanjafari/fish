@@ -1,2 +1,8 @@
-fish_variables
+# folders:
+completions
 functions
+logs
+
+# files:
+fish_plugins
+fish_variables
