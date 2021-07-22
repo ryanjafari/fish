@@ -1,4 +1,4 @@
-#!/Users/ryanjafari/.local/bin/env /Users/ryanjafari/.local/bin/fish
+#!/opt/home/.local/bin/env /opt/home/.local/bin/fish
 
 # set -l host_locl localhost
 # set -l port_locl 6001

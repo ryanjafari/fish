@@ -1,4 +1,4 @@
-#!$HOME/.local/bin/env $HOME/.local/bin/perl
+#!/opt/home/.local/bin/env /opt/home/.local/bin/perl
 
 ## uncolor — remove terminal escape sequences such as color changes
 while (<>) {

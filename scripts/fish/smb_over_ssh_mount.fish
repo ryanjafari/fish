@@ -1,4 +1,4 @@
-#!/Users/ryanjafari/.local/bin/env /Users/ryanjafari/.local/bin/fish
+#!/opt/home/.local/bin/env /opt/home/.local/bin/fish
 
 # TODO: we're successful, so bg the shit
 

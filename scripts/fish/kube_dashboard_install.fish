@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/opt/home/.local/bin/env /opt/home/.local/bin/fish
 
 # Add kubernetes-dashboard repository:
 helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/

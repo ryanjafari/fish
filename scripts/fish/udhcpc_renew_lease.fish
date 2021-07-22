@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/opt/home/.local/bin/env /opt/home/.local/bin/fish
 
 # get pid of udhcpc
 set PID (pidof udhcpc)

@@ -1,5 +1,7 @@
 # TODO: check permissions on and under ~/.config/fish
 # TODO: check what files are executable
+# TODO: non-exported variables should be lowercase
+# TODO: set more env vars with (set --show) and https://bit.ly/3zopgVF
 
 # Set the location of our Fish files:
 # TODO: --local?

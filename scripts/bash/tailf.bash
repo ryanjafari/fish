@@ -1,4 +1,4 @@
-#!$HOME/.local/bin/env bash
+#!/opt/home/.local/bin/env /opt/home/.local/bin/bash
 
 tailf() (
     # args: <file> [<number-of-header-lines>]

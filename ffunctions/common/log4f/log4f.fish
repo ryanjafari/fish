@@ -18,6 +18,7 @@ function log4f \
         -- $argv
 
     if not $_log4f_header_shown
+        # TODO: rename process to command?
         set --local header (_log4f_columns "type" "time" "process" "message")
         _log4f_log "$header"
         set _log4f_header_shown true
@@ -170,13 +171,12 @@ funcsave _log4f_columns
 # fish_exit
 # fish_cancel
 
+# TODO: _on_var_change?
 # TODO: inline or in function it is needed for?
 function _on_fish_preexec \
     --on-event fish_preexec \
     --description ""
     set _log4f_header_shown false
-    # set --local header (_log4f_columns "type" "time" "process" "message")
-    # _log4f_log "$header"
 end
 funcsave _on_fish_preexec
 
@@ -184,8 +184,8 @@ funcsave _on_fish_preexec
 function _on_fish_postexec \
     --on-event fish_postexec \
     --description ""
+    # TODO:
+    # log4f --type=d "Command took $CMD_DURATION milliseconds"
     set _log4f_header_shown false
-    # set --local header (_log4f_columns "type" "time" "process" "message")
-    # _log4f_log "$header"
 end
 funcsave _on_fish_postexec

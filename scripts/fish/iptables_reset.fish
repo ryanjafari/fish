@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/opt/home/.local/bin/env /opt/home/.local/bin/fish
 
 printf "=> Resetting ip(6)tables...\n"
 
