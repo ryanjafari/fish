@@ -24,7 +24,7 @@ function fish_prompt
         -priority "root,user,shell-var,dotenv,ssh,host,cwd,cwd-path,git,git-branch,git-status,docker,docker-context,kube,terraform-workspace,time,exit" \
         #-priority "perms,jobs" \
         -shell bare \
-        -shell-var $FISH_VERSION \
+        -shell-var MF_FISH_VERSION \
         #-static-prompt-indicator \
         -truncate-segment-width 8
     eval $cmd

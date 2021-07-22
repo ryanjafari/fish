@@ -5,6 +5,7 @@
 
 # Set the location of our Fish files:
 # TODO: --local?
+# TODO: change case and __?
 set --global --unpath __FSH_PATH "$HOME/.config/fish"
 set --global --unpath __FNC_PATH "$__FSH_PATH/ffunctions"
 set --global --unpath __COM_PATH "$__FNC_PATH/common"

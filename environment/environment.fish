@@ -25,5 +25,5 @@ set --global --export --unpath LOCATE_PATH "/var/db/locate.database"
 # end
 
 # Setup FISH shell variable for powerline-go:
-# set --local fish_version (get_version (fish -v))
-# set --global --export __FISH_VERSION "🐟$fish_version"
+# TODO: specify --global when --export
+set --global --export MF_FISH_VERSION "🐟$FISH_VERSION"
