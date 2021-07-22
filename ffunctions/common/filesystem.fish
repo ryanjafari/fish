@@ -1,12 +1,20 @@
 log4f --type=i "Loading 🗂 filesystem functions..."
 
+# TODO: file mode creation mask (umask)
+# TODO: normalize ownership & permissions function
+# ryanjafari staff
+# -rw-r--r--
+# drwxr-xr-x
+
 function own \
     --argument-names resource \
     --description "Take ownership of a file or folder (and its contents)."
-    set -l file (basename $resource)
-    log4f "Taking ownership of $file..."
-    sudo chown -R (id -u):(id -g) $resource
-    log4f "Done: sudo chown -R (id -u):(id -g) $file"
+
+    # TODO: expand glob to list all that will be owned?
+    # TODO: options here for --verbose and --changes
+    log4f --type=i "Taking ownership of $resource"
+    sudo chown --recursive --changes (id -u):(id -g) $resource
+    log4f --type=i "Done: sudo chown -R (id -u):(id -g) $resource"
 end
 funcsave own
 

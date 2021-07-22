@@ -1,7 +1,7 @@
 # TODO: remove --
 alias --save strc "string collect --"
 alias --save stre "string escape --"
-alias --save strm "string trim --"
+alias --save strm "string trim"
 alias --save strj "string join --"
 alias --save strr "string repeat"
 # alias --save strs "string split $argv --"

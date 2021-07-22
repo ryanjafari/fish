@@ -1,5 +1,12 @@
 #!/opt/home/.local/bin/env /opt/home/.local/bin/fish
 
+function smb_ssh_init
+    # --argument-names name \
+    # --description ""
+    # log4f --type=i "Setting up SMB over SSH..."
+end
+funcsave smb_ssh_init
+
 # set -l host_locl localhost
 # set -l port_locl 6001
 # set -l host_remo mac-mini-wifi
@@ -7,7 +14,6 @@
 # set -l user_remo ryanjafari
 # set -l host_core (get_num_cores $host_remo)
 
-# log4f "Setting up SMB over SSH..."
 # log4f "\t\$host_locl: $host_locl"
 # log4f "\t\$port_locl: $port_locl"
 # log4f "\t\$host_remo: $host_remo"
