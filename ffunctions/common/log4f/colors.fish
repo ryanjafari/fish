@@ -3,6 +3,7 @@
 function _get_color_seq
     # set --local color_seq (set_color $argv)
     # TODO: what happens if just set_color?
+    # TODO: isatty stdout before using set_color
     echo (set_color $argv)
 end
 funcsave _get_color_seq

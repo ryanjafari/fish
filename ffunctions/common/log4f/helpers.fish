@@ -59,7 +59,7 @@ function _get_timestamp
 end
 funcsave _get_timestamp
 
-function _var_dump \
+function _log4f_var_dump \
     --argument-names var_name \
     --no-scope-shadowing
 
@@ -67,7 +67,7 @@ function _var_dump \
     # TODO: if no var name given show all
     # TODO: if var not found
     set --local lines (set --show --long "$var_name")
-    set lines (_color_vars $lines)
+    set lines (_color_vars $lines)[2..-1] # skip scope line
     for line in $lines
         set --local message
 
@@ -84,7 +84,7 @@ function _var_dump \
         echo $message
     end
 end
-funcsave _var_dump
+funcsave _log4f_var_dump
 
 # TODO: PATH print out (order important)
 # TODO: env print out (order less important) | sort

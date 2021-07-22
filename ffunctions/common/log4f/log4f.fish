@@ -20,7 +20,9 @@ function log4f \
     if not $_log4f_header_shown
         # TODO: rename process to command?
         set --local header (_log4f_columns "type" "time" "process" "message")
-        _log4f_log "$header"
+
+        # TODO: differentiate header with formatting
+        _log4f_log "\n$header"
         set _log4f_header_shown true
     end
 
@@ -43,7 +45,7 @@ function _log4f_log \
     if is_terminal
         _log4f_terminal "$line"
     else
-        _log4f_file "$line"
+        # _log4f_file "$line"
     end
 end
 funcsave _log4f_log
@@ -58,7 +60,7 @@ function _log4f_log_var \
     set --local col_type (_get_type_display 'v')
     set --local col_time (_get_timestamp)
     set --local col_process (status current-command) # TODO: function also?
-    set --local col_message (_var_dump $var_name)
+    set --local col_message (_log4f_var_dump $var_name)
 
     set --local row (_log4f_columns \
       "$col_type" \
@@ -102,8 +104,7 @@ funcsave _log4f_log_msg
 function _log4f_terminal \
     --argument-names line \
     --description "Writes the given \$message to standard output (STDOUT)."
-
-    printf %b\n $line
+    printf %b\n $line >>/dev/ttys002
 end
 funcsave _log4f_terminal
 
@@ -127,19 +128,19 @@ function _log4f_columns \
     --argument-names col_type col_time col_process col_message \
     --description "Prints formatted columns for each log4f row."
 
-    # TODO: make dynamic => subtract w/ color from w/o
-    set --local col_size_type 0
-    set --local col_size_time (string length "%m/%d %H:%M:%S")
-    set --local col_size_process (string length "get_num_cores")
-
     set --local num_columns (count $argv)
     set --local num_spaces_per_col 1
     set --local num_delimiters_per_col 2
+
     set --local delimiter_cols (math "\
         ($num_columns * $num_spaces_per_col) + \
         ($num_columns * $num_delimiters_per_col) \
         + 1")
 
+    # TODO: make dynamic => subtract w/ color from w/o
+    set --local col_size_type 0
+    set --local col_size_time (string length "%m/%d %H:%M:%S")
+    set --local col_size_process (string length "get_num_cores")
     set --local _col_size_message (math "\
         $COLUMNS - \
         ($col_size_type + $col_size_time + $col_size_process) - \

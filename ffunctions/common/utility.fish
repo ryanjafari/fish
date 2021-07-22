@@ -24,59 +24,6 @@ function get_os \
 end
 funcsave get_os
 
-function num_parallel_tasks \
-    --description "Gets the optimal number of tasks that can be run in parallel on the machine."
-    # Formula: num_of_cpu * cores_per_cpu * threads_per_core
-    set -l cpu_count 1
-    set -l core_count (sysctl -n machdep.cpu.core_count)
-    set -l thread_count (sysctl -n machdep.cpu.thread_count)
-    set -l threads_per_core (math "$thread_count / $core_count")
-    set -l tasks_count (math "$cpu_count * $core_count * $threads_per_core")
-
-    echo $tasks_count
-end
-funcsave num_parallel_tasks
-
-function get_num_cores \
-    --argument-names host \
-    --description "Get the number of cores for the specified host."
-    log4f --type=d "Getting the number of cores for host: $host"
-
-    set -l phys_cpus 1
-    set -l logi_cpus ""
-    # set -l sysct_cmd ""
-
-    if [ -z "$host" -o "$host" = localhost ]
-        set host localhost
-        log4f "Either localhost or no host was specificed: $host"
-        set logi_cpus (sysctl -n machdep.cpu.core_count)
-    else
-        log4f "A host was specified: $host"
-        set logi_cpus (ssh $host $sysct_cmd)
-        # if the above fails...
-        # if test ! $status -eq 0
-        #     echo "Previous command failed"
-        # end
-        # if test $status -ne 0
-        #     echo "Previous command failed"
-        # end
-    end
-
-    log4f --type=i "Number of physical CPUs: $phys_cpus"
-    log4f --type=n "Number of logical CPUs: $logi_cpus"
-
-    set -l num_cores (math "$phys_cpus * $logi_cpus")
-
-    log4f "Number of cores: $num_cores"
-    log4f --type=e "Host $host has $num_cores cores"
-    log4f --type=f "Host $host has $num_cores cores"
-    set --local array tim steve bob joe
-    log4f -v array
-
-    echo $num_cores
-end
-funcsave get_num_cores
-
 function sorted \
     --argument-names argv \
     --description "Sorts an array."
@@ -94,3 +41,12 @@ function is_terminal
     # status is-interactive
 end
 funcsave is_terminal
+
+# TODO: use this in places that need it
+function has_arg\? \
+    --argument-names arg \
+    --description "Returns true (exit status = 0) if the argument \
+      is declared and not empty and false (exit status = 1) if it isn't"
+    set --query arg; and [ -n "$arg" ]
+end
+funcsave has_arg\?

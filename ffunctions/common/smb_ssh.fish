@@ -3,29 +3,30 @@
 function smb_ssh_init
     # --argument-names name \
     # --description ""
-    # log4f --type=i "Setting up SMB over SSH..."
+    log4f --type=i "Setting up SMB over SSH..."
+
+    set --local host_locl localhost
+    set --local port_locl 6001
+    set --local host_remo mac-mini-wifi
+    set --local port_remo 445
+    set --local user_remo ryanjafari
+    set --local host_core (sys get cores $host_remo)
+
+    log4f --var host_locl
+    log4f --var port_locl
+    log4f --var host_remo
+    log4f --var port_remo
+    log4f --var user_remo
+    log4f --var host_core
+
+    parallel -S $host_core/$host_remo echo force {} cpus on server ::: $host_core
 end
 funcsave smb_ssh_init
-
-# set -l host_locl localhost
-# set -l port_locl 6001
-# set -l host_remo mac-mini-wifi
-# set -l port_remo 445
-# set -l user_remo ryanjafari
-# set -l host_core (get_num_cores $host_remo)
-
-# log4f "\t\$host_locl: $host_locl"
-# log4f "\t\$port_locl: $port_locl"
-# log4f "\t\$host_remo: $host_remo"
-# log4f "\t\$port_remo: $port_remo"
-# log4f "\t\$user_remo: $user_remo"
-# log4f "\t\$host_core: $host_core"
 
 # # TODO: trap
 # # TODO: env_parallel?
 # # TODO: PARALLEL_SSH_* vars
 
-# parallel -S $host_core/mac-mini-wifi.lan echo force {} cpus on server ::: $host_core
 
 # TODO: open_ssh_tunnel_from_to
 # parallel -S $SERVER1 echo running on ::: $SERVER1
