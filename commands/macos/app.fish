@@ -1,4 +1,12 @@
-# log4f "Loading 💻 macOS-specific app functions..."
+# log4f --type=i "Loading 💻 macOS-specific app functions..."
+
+# function app \
+#     --argument-names argv
+#     # --inherit-variable $_ \
+#     # --description ""
+#     handle_subcommand app $argv
+# end
+# funcsave app
 
 # function app
 #     # --argument-names argv

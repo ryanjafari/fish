@@ -1,4 +1,4 @@
-log4f --type=i "Loading 🧽 cleanup functions..."
+log4f --type=i "Loading 🧽 cleanup commands..."
 
 function clear_fish_vars \
     --description "Wipes out all set variables (Fish and otherwise)."

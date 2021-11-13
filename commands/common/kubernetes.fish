@@ -1,4 +1,4 @@
-log4f --type=i "Loading ⎈ Kubernetes functions..."
+log4f --type=i "Loading ⎈ Kubernetes commands..."
 
 function k-drain \
     --wraps "k drain" \

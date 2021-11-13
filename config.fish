@@ -2,47 +2,77 @@
 # TODO: check what files are executable
 # TODO: non-exported variables should be lowercase
 # TODO: set more env vars with (set --show) and https://bit.ly/3zopgVF
-# TODO: completions
+# TODO: completions, see: https://git.io/JB8Gs
+# TODO: colorizer
+# TODO: fundle & plugins for it?
+# TODO: fish in docker under alpine linux
+# TODO: auto update plugins
+# TODO: https://git.io/JBFF8
+# TODO: https://git.io/JJSzo
+# TODO: https://git.io/JBFbJ
+# TODO: https://git.io/gitnow
+# TODO: getopts https://git.io/JBFbE
+# TODO: fishtape https://git.io/JBFb6
+# TODO: fish-async-prompt https://git.io/JBFNi
+# TODO: fish-abbreviation-tips https://git.io/JBFAm
 
-# Set the location of our Fish files:
-# TODO: --local?
-# TODO: change case and __?
-set --global --unpath __FSH_PATH "$HOME/.config/fish"
-set --global --unpath __FNC_PATH "$__FSH_PATH/ffunctions"
-set --global --unpath __COM_PATH "$__FNC_PATH/common"
+# Allow notifications to be sent on systems without graphical capabilities.
+# Note this requires you to also set __done_notification_command.
+# SEE: https://git.io/JsqRn
+# set -U __done_allow_nongraphical 1
+
+source "./paths.fish"
 
 # Need to load the logger before anything else:
-set --global --unpath __LOG4F_PATH "$__FSH_PATH/logs"
-source "$__COM_PATH/strings.fish"
-source "$__COM_PATH/utility.fish"
-source "$__COM_PATH/log4f/log4f.fish"
-
-# We're going to use a function (get_os) soon, so:
-source "$__COM_PATH/_import.fish"
-
-# Load stuff common to any OS:
-source "$__FSH_PATH/environment/environment.fish"
-source "$__FSH_PATH/aliases.fish"
-source "$__FSH_PATH/prompt.fish"
+# TODO: glob these
+source "$mf_commands_common_path/core/strings.fish"
+source "$mf_commands_common_path/core/utility.fish"
+source "$mf_commands_common_path/log4f/log4f.fish"
 
 # Get the current OS:
-set --global __OS (get_os)
+# TODO: move to system (sys)
+set --global mf_os (get-os)
 
-set --local int
-if is_terminal
-    set int interactively
-else
-    set int non-interactively
-end
+sources (glob ./initializers/* --except os_\*.fish)
+source "./initializers/os_$mf_os.fish"
+
+log4f --type=i "Loading 🚸 cross-OS functions..."
+
+source "$mf_commands_common_path/security.fish"
+
+# sources (glob $mf_commands_common_path/*)
+# source (which env_parallel.fish)
+
+# Load stuff common to any OS:
+source "$mf_fish_path/environment/environment.fish"
+source "$mf_fish_path/environment/environment_$mf_os.fish"
+
+# source "$mf_fish_path/aliases.fish"
+
+# set --local int
+# if [ (is_terminal\?) -eq 0 ]
+#     set int interactively
+# else
+#     set int non-interactively
+# end
 
 # TODO: -d/--debug, -i/--info...
 # TODO: what happens when --type=i and --var
-log4f --type=i "Setting up 🐟 for $__OS, $int"
+# log4f --type=i "Setting up 🐟 for $__OS, $int"
 
-source "$__FSH_PATH/environment/environment_$__OS.fish"
-source "$__FSH_PATH/commands/commands_$__OS.fish"
+# source "$__FSH_PATH/environment/environment_$__OS.fish"
+# source "$__FSH_PATH/commands/commands_$__OS.fish"
 
-log4f --type=i "Done setting up 🐟 for $__OS, $int"
+# set --global --unpath __OS_PATH "$__FNC_PATH/$__OS"
+
+# source "$__OS_PATH/_import.fish"
+
+# log4f --type=i "Done setting up 🐟 for $__OS, $int"
 
 # log4f --var PATH # order preserved i think
 # log4f --var (env | sort) # order not important
+
+# function fish_prompt_loading_indicator -a last_prompt
+#     echo -n "$last_prompt" | sed -r 's/\x1B\[[0-9;]*[JKmsu]//g' | read -zl uncolored_last_prompt
+#     echo -n (set_color brblack)"$uncolored_last_prompt"(set_color normal)
+# end

@@ -1,3 +1,77 @@
+log4f --type=i "Loading 💻 macOS-specific functions..."
+
+# TODO: glob
+# TODO: reorder
+source "$__OS_PATH/app.fish"
+source "$__OS_PATH/macos.fish"
+source "$__OS_PATH/security.fish"
+
+# macos setup tm
+# TODO: use hashing when passing password around
+# or displaying in output
+function _setup_tm \
+    --argument-names argv
+    argparse \
+        --stop-nonopt \
+        --name _open_tunnel_success \
+        "p/port=" \
+        -- $argv
+
+    set --local op_json \
+        (op list items \
+        --account ploy_and_crit \
+        --vault Personal \
+        --categories Login \
+        --tags Servers | op get item - \
+        --fields username,password)
+
+    set --local op_username (echo $op_json | jq ".username")
+    set --local op_password (echo $op_json | jq ".password")
+    set --local path \"tm-ryans-macbook\"
+    set --local port \"$_flag_port\"
+
+    log4f --type=n "Adding password:" \
+        "\"--account-name=$op_username\"" \
+        "\"--password=$op_password\"" \
+        "\"--path=$path\"" \
+        "\"--port=$port\""
+
+    sec add password \
+        --account-name=$op_username \
+        --password=$op_password \
+        --path=$path \
+        --port=$port
+
+    set --local tmutil_id (macos get tm)
+
+    if [ $status -eq 0 ]
+        log4f --type=d success
+        if set --query tmutil_id
+            log4f --type=d "defined tmutil_id"
+            if [ -n "$tmutil_id" ]
+                log4f --type=d "got tmutil_id"
+                macos del tm $tmutil_id
+            end
+        end
+    else
+        log4f --type=e failure
+    end
+
+    set --local protocol smb
+    set --local host localhost
+
+    macos set tm "$protocol://$op_username:$op_password@$host:$port/$path" # need?
+
+    log4f --type=d "Cleanup: erasing credentials from memory..."
+
+    set --erase op_password
+    set --erase op_username
+    set --erase op_json
+end
+funcsave _setup_tm
+
+# source (which env_parallel.fish)
+
 # log4f --type=i "Loading 💻 macOS-specific functions..."
 
 # set --local --unpath macos_path "$ffs_path/macos"

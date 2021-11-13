@@ -1,4 +1,4 @@
-log4f --type=i "Loading 🗂 filesystem functions..."
+log4f --type=i "Loading 🗂 filesystem commands..."
 
 # TODO: file mode creation mask (umask)
 # TODO: normalize ownership & permissions function

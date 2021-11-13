@@ -24,6 +24,12 @@ set --global --export --unpath LOCATE_PATH "/var/db/locate.database"
 #     set --export http_proxy
 # end
 
+# Docker CLI Access Token
+# Not read by Docker CLI dynamically:
+# set --export DOCKER_ACCESS_TOKEN (sec get op-password \
+#  --item-uuid="4fq5lm2ufffbvjubhap6ynf5tm" \
+#  --password-field="credential")
+
 # Setup FISH shell variable for powerline-go:
 # TODO: specify --global when --export
 set --global --export MF_FISH_VERSION "🐟$FISH_VERSION"

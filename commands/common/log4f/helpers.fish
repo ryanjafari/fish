@@ -1,49 +1,47 @@
 # TODO: refactor
-function _get_type_display \
-    --argument-names flag_type \
-    --description ""
+function _get_type_display
+    # --description ""
 
-    set --local col_type
-    set --local type_dot_char
-    set --local isa
+    set --local flag_type $argv[1]
+    set --local col_type $argv[2..-1]
 
-    if is_terminal
-        set type_dot_char ●
-
+    if [ (is_terminal\?) -eq 0 ]
         switch $flag_type
-            case v
-                set col_type "$__COLOR_BLUE$type_dot_char v"
             case d
-                set col_type "$__COLOR_GRAY$type_dot_char d"
+                set col_type "$__COLOR_GRAY_DEFAULT$col_type"
             case i
-                set col_type "$__COLOR_WHITE$type_dot_char i"
+                set col_type "$__COLOR_GRAY_VIBRANT$col_type"
             case n
-                set col_type "$__COLOR_NORMAL  n"
+                set col_type "$__COLOR_NORMAL$col_type"
             case e
-                set col_type "$__COLOR_YELLOW$type_dot_char e"
+                set col_type "$__COLOR_YELLOW$col_type"
             case f
-                set col_type "$__COLOR_RED$type_dot_char f"
+                set col_type "$__COLOR_RED$col_type"
+            case s
+                set col_type "$__COLOR_GREEN$col_type"
+            case v
+                set col_type "$__COLOR_CYAN$col_type"
             case '*'
                 # TODO: unknown type
         end
 
         set col_type "$col_type$__COLOR_NORMAL"
     else
-        set type_dot_char '*'
-
         switch $flag_type
-            case v
-                set col_type "$type_dot_char v "
             case d
-                set col_type "$type_dot_char d "
+                set col_type "$col_type"
             case i
-                set col_type "$type_dot_char i "
+                set col_type "$col_type"
             case n
-                set col_type "$type_dot_char n "
+                set col_type "$col_type"
             case e
-                set col_type "$type_dot_char e "
+                set col_type "$col_type"
             case f
-                set col_type "$type_dot_char f "
+                set col_type "$col_type"
+            case s
+                set col_type "$col_type"
+            case v
+                set col_type "$col_type"
             case '*'
                 # TODO: unknown type
         end
@@ -53,6 +51,8 @@ function _get_type_display \
 end
 funcsave _get_type_display
 
+# TODO: should mirror tide prompt timestamp
+# TODO: or apple timestamp
 function _get_timestamp
     set --local timestamp (date +"%m/%d %H:%M:%S")
     echo $timestamp
@@ -66,25 +66,35 @@ function _log4f_var_dump \
     # TODO: must have a value? or show all?
     # TODO: if no var name given show all
     # TODO: if var not found
-    set --local lines (set --show --long "$var_name")
-    set lines (_color_vars $lines)[2..-1] # skip scope line
-    for line in $lines
+    set --local lines
+
+    if set --query $var_name
+        set lines (set --show --long "$var_name")
+        set lines (_color_vars $lines[2..-1]) # skip scope line
+    else
+        set lines "\$$var_name: undefined"
+        set lines (_color_vars $lines[1..-1])
+    end
+
+    test (count $lines) -gt 1; and echo "$lines[1]\n"; or echo "$lines[1]"
+
+    _indent_message $lines[2..-1]
+end
+funcsave _log4f_var_dump
+
+function _indent_message \
+    --argument-names argv
+    for line in $argv
         set --local message
 
-        set --local padded $line
-        if [ "$line" != "$lines[1]" ]
-            set padded (string pad --width 39 "$line") # TODO: dynamic
-        end
-        set --append message $padded
-
-        if [ "$line" != "$lines[-1]" ]
-            set --append message '\n'
-        end
+        set --append message (strr -n 53 ' ') # TODO: dynamic #
+        set --append message $line
+        test $line != $argv[-1]; and set --append message '\n'
 
         echo $message
     end
 end
-funcsave _log4f_var_dump
+funcsave _indent_message
 
 # TODO: PATH print out (order important)
 # TODO: env print out (order less important) | sort

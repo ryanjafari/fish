@@ -1,37 +1,20 @@
-log4f --type=i "Loading ⚙️ system functions..."
+log4f --type=i "Loading ⚙️ system commands..."
 
-function sys
-    # TODO: inherit variable $_
-    log4f --type=i "Invoking system command..."
+# TODO: model => sudo dmidecode | grep -A3 '^System Information'
+# TODO: os version
 
-    # set --local sys_cmd (status current-function)
-    set --local sys_sub $argv[1]
-    set --local sys_obj $argv[2]
-    set --local sys_arg $argv[3]
-
-    if has_arg\? $sys_sub
-        log4f --type=d "Invoking with subcommand: $sys_sub"
-        if has_arg\? $sys_obj
-            log4f --type=d "Invoking \"sys $sys_sub\" with system object: $sys_obj"
-            set --local cmd "_sys_$sys_sub\_$sys_obj"
-            eval $cmd $sys_arg # TODO: exec?
-            # TODO: error handling
-        else
-            # TODO: print help in this case (look for event
-            # fish_usage_err or fish_err)
-            log4f --type=e "Missing system object for \"sys $sys_sub\""
-            return 2
-        end
-    else
-        echo we dont
-    end
+function sys \
+    --argument-names argv
+    # --inherit-variable $_ \
+    # --description ""
+    handle_subcommand $argv
 end
 funcsave sys
 
 function _sys_get_cores \
     --argument-names host \
     --description "Get the number of cores for the specified host."
-    log4f --type=d "Getting the number of cores for host: \"$host\""
+    log4f --type=n "Getting the number of cores for host: \"$host\"..."
 
     set --local phys_cpus 1
     set --local logi_cpus
@@ -39,7 +22,7 @@ function _sys_get_cores \
 
     if [ -z "$host" -o "$host" = localhost ]
         set host localhost
-        log4f "Either localhost or no host was specificed: \"$host\""
+        log4f --type=i "Either localhost or no host was specificed: \"$host\""
         set logi_cpus ($sysct_cmd)
     else
         log4f "A host was specified: $host"
@@ -61,8 +44,6 @@ function _sys_get_cores \
     log4f "Number of cores: $num_cores"
     log4f --type=e "Host $host has $num_cores cores"
     log4f --type=f "Host $host has $num_cores cores"
-    set --local array tim steve bob joe
-    log4f -v array
 
     echo $num_cores
 end
@@ -114,17 +95,32 @@ funcsave _sys_get_proc
 function _sys_kill_proc \
     --argument-names process
     # --description ""
+
+    # TODO: rename for clarity
     set --local proc (_sys_get_proc $process)
     set --local pid $proc[1]
     set --local prc $proc[2]
 
     log4f --type=n "Killing process: \"$prc\", with pid :\"$pid\"..."
 
-    kill --signal KILL $pid
+    # TODO: maybe there sometimes is a job and sometimes isn't?
+    # TODO: wait pid (requires a job)
+    # TODO: if job, wait, if not don't
+    kill --signal KILL $pid # &
 
-    # TODO: wait pid
+    # TODO: when run any command, something like this should run
+    if [ $status -eq 0 ]
+        log4f --type=n "Successfully killed process: \"$prc\", with pid :\"$pid\""
+        set --local wait_secs 3
+        log4f --type=n "Waiting $wait_secs seconds for death of process: \"$prc\", with pid :\"$pid\""
+        sleepp $wait_secs
+    else
+        log4f --type=e "Failed killing process: \"$prc\", with pid :\"$pid\""
+    end
 
     set proc (_sys_get_proc $prc)
+
+    # TODO: if respawned
     set pid $proc[1]
     set prc $proc[2]
 

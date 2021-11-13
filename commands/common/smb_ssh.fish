@@ -1,25 +1,33 @@
 log4f --type=i "Loading 📂 SMB over SSH functions..."
 
+# TODO: net
+# ssh remote "cd /home/user/ && tar czf - accounts" | pv -s 23091k | tar xz
 function smb_ssh_init
     # --argument-names name \
     # --description ""
     log4f --type=i "Setting up SMB over SSH..."
 
-    set --local host_locl localhost
-    set --local port_locl 6001
-    set --local host_remo mac-mini-wifi
-    set --local port_remo 445
-    set --local user_remo ryanjafari
-    set --local host_core (sys get cores $host_remo)
+    # set --local host_locl localhost
+    # set --local port_locl (get_random_port)
+    # set --local host_remo mac-mini-eth-tun
+    # set --local port_remo 445
+    # set --local user_remo ryanjafari
+    # set --local host_core (sys get cores $host_remo) # lazy load?
 
-    log4f --var host_locl
-    log4f --var port_locl
-    log4f --var host_remo
-    log4f --var port_remo
-    log4f --var user_remo
-    log4f --var host_core
+    # log4f --var host_locl
+    # log4f --var port_locl
+    # log4f --var host_remo
+    # log4f --var port_remo
+    # log4f --var user_remo
+    # log4f --var host_core
 
-    parallel -S $host_core/$host_remo echo force {} cpus on server ::: $host_core
+    # ssh -vvv -N -L \
+    #     $host_locl:$port_locl:$host_remo:$port_remo \
+    #     $user_remo@$host_remo
+
+    # TODO: run parallel so we quit cleanly?
+    # parallel -S $host_core/$host_remo \
+    #     echo force {} cpus on server ::: $host_core
 end
 funcsave smb_ssh_init
 

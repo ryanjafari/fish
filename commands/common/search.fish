@@ -1,4 +1,4 @@
-log4f --type=i "Loading 🔎 search functions..."
+log4f --type=i "Loading 🔎 search commands..."
 
 # TODO: progress & parallelize
 # SEE: https://bit.ly/3AsuEIV
