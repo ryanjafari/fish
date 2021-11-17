@@ -39,6 +39,8 @@ source "./initializers/os_$mf_os.fish"
 log4f --type=i "Loading 🚸 cross-OS functions..."
 
 source "$mf_commands_common_path/security.fish"
+source "$mf_commands_common_path/network.fish"
+source "$mf_commands_common_path/kubernetes.fish"
 
 # sources (glob $mf_commands_common_path/*)
 # source (which env_parallel.fish)
@@ -47,7 +49,7 @@ source "$mf_commands_common_path/security.fish"
 source "$mf_fish_path/environment/environment.fish"
 source "$mf_fish_path/environment/environment_$mf_os.fish"
 
-# source "$mf_fish_path/aliases.fish"
+source "$mf_fish_path/aliases.fish"
 
 # set --local int
 # if [ (is_terminal\?) -eq 0 ]
