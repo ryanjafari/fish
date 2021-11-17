@@ -33,3 +33,6 @@ set --global --export --unpath LOCATE_PATH "/var/db/locate.database"
 # Setup FISH shell variable for powerline-go:
 # TODO: specify --global when --export
 set --global --export MF_FISH_VERSION "🐟$FISH_VERSION"
+
+# who needed this?
+set --global --export FISH_CONFIG_ROOT "~/.config/fish"
