@@ -21,7 +21,7 @@
 # SEE: https://git.io/JsqRn
 # set -U __done_allow_nongraphical 1
 
-source "./paths.fish"
+source ~/.config/fish/paths.fish
 
 # Need to load the logger before anything else:
 # TODO: glob these
@@ -33,8 +33,8 @@ source "$mf_commands_common_path/log4f/log4f.fish"
 # TODO: move to system (sys)
 set --global mf_os (get-os)
 
-sources (glob ./initializers/* --except os_\*.fish)
-source "./initializers/os_$mf_os.fish"
+sources (glob ~/.config/fish/initializers/* --except os_\*.fish)
+source ~/.config/fish/initializers/os_$mf_os.fish
 
 log4f --type=i "Loading 🚸 cross-OS functions..."
 
