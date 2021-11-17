@@ -114,7 +114,7 @@ function handle_subcommand \
         if has_arg\? $cmd_obj
             log4f --type=d "With object: \"$cmd_obj\"..."
 
-            set --local cmd_coo __(strj '_' $cmd_cmd $cmd_sub $cmd_obj)
+            set --local cmd_coo _(strj '_' $cmd_cmd $cmd_sub $cmd_obj)
 
             log4f --type=d "Trying to call function: \"$cmd_coo\"..."
 

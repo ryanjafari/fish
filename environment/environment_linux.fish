@@ -10,12 +10,10 @@ set --export GOPATH $HOME/go
 # set --export KUBE_CONFIG_ROOT "$U2_ROOT/kube"
 
 # Setup $PATH:
-# TODO: --prepend
-fish_add_path /media/u2/fish/scripts
-fish_add_path $HOME/.bin
-fish_add_path /usr/local/bin
-fish_add_path $HOME/.krew/bin
-fish_add_path $HOME/go/bin
+# TODO: --prepend, --path
+fish_add_path --prepend $HOME/.local/bin
+fish_add_path --prepend /usr/local/bin
+fish_add_path --prepend $HOME/go/bin
 
 # Setup kubeconfig files for kubectl:
 # set --export KUBECONFIG \

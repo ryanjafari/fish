@@ -1,3 +1,5 @@
+#!/opt/home/.local/bin/env /opt/home/.local/bin/fish
+
 log4f --type=i "Loading 📶 network commands..."
 
 # sudo ip route add 172.16.0.0/24 dev br-$(sudo docker network inspect pi-hole_default |jq -r '.[0].Id[0:12]') table lan_routable
@@ -18,7 +20,9 @@ function _net_get_port \
     log4f --type=n "Getting a random port..."
 
     # TODO: wipe the linux-specific portion?
-    switch $__OS
+    log4f --type=d "OS is: $mf_os"
+
+    switch $mf_os
         case macos
             set --local first (sysctl -n net.inet.ip.portrange.first)
             set --local last (sysctl -n net.inet.ip.portrange.last)
@@ -334,3 +338,36 @@ funcsave open_ssh_tunnel_from_to
 #
 # end
 # funcsave flush_sshd
+
+function _net_reset_iptables
+    printf "=> Resetting ip(6)tables...\n"
+
+    # TODO: convert to iptables-nft
+
+    # Clear iptables rules:
+
+    iptables -P INPUT ACCEPT
+    iptables -P FORWARD ACCEPT
+    iptables -P OUTPUT ACCEPT
+    iptables -t nat -F
+    iptables -t mangle -F
+    iptables -F
+    iptables -X
+
+    # Clear ip6tables rules:
+
+    ip6tables -P INPUT ACCEPT
+    ip6tables -P FORWARD ACCEPT
+    ip6tables -P OUTPUT ACCEPT
+    ip6tables -t nat -F
+    ip6tables -t mangle -F
+    ip6tables -F
+    ip6tables -X
+
+    printf "=> Done.\n"
+
+    printf "=> Resetting ipvs...\n"
+    ipvsadm --clear
+    printf "=> Done.\n"
+end
+funcsave _net_reset_iptables
