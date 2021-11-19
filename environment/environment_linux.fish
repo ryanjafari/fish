@@ -7,7 +7,7 @@ set --export GOPATH $HOME/go
 # set --export __SYS_ROOT /
 # set --export MOUNT_ROOT /media
 # set --export U2_ROOT $MOUNT_ROOT/u2
-# set --export KUBE_CONFIG_ROOT "$U2_ROOT/kube"
+set --export KUBE_CONFIG_ROOT "$HOME/.kube"
 
 # Setup $PATH:
 # TODO: --prepend, --path
@@ -16,6 +16,7 @@ fish_add_path --prepend /usr/local/bin
 fish_add_path --prepend $HOME/go/bin
 
 # Setup kubeconfig files for kubectl:
+set --export KUBECONFIG /etc/kubernetes/admin.conf
 # set --export KUBECONFIG \
 #     /root/kubeconfig/Config.yaml \
 #     /root/kubeconfig/Cluster.yaml \
@@ -26,9 +27,9 @@ set --local crio_bridge_cni_cidr "10.85.0.0/16"
 set --local flan_netwrk_cni_cidr "10.244.0.0/16"
 set --export KUBEADM_POD_NETWORK_CIDR $crio_bridge_cni_cidr
 set --export KUBEADM_NODE_NAME (hostname)
-set --export KUBEADM_KUBE_VER "1.21.2"
+set --export KUBEADM_KUBE_VER "1.22.3"
 set --export KUBEADM_ADV_ADDR (get_local_ip)
-set --export KUBEADM_CTRL_PLN_ENDPT "k8s-cluster.lan"
+set --export KUBEADM_CTRL_PLN_ENDPT "k8s-cluster.srv"
 set --export KUBELET_EXTRA_ARGS "--cgroup-driver=cgroupfs"
 set --export KUBE_PROXY_MODE ipvs
 

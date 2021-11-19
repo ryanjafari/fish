@@ -13,8 +13,7 @@ function own \
     # TODO: expand glob to list all that will be owned?
     # TODO: options here for --verbose and --changes
     log4f --type=i "Taking ownership of $resource"
-    sudo chown --recursive --changes (id -u):(id -g) $resource
-    log4f --type=i "Done: sudo chown -R (id -u):(id -g) $resource"
+    chown --recursive --changes (id -u):(id -g) $resource
 end
 funcsave own
 

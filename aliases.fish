@@ -12,10 +12,12 @@ alias --save s source
 alias --save e "echo -nse" # disable this?
 # alias --save as "alias --save --"
 
+# reset fish
 alias --save exec-fish "exec fish"
 alias --save clear-fish "rm -rf ./functions; and rm -rf ./logs; and rm -rf fish_variables"
 alias --save clear-exec-fish "clear-fish; and exec-fish"
 
+# third party
 alias --save pjson "jq -S --unbuffered -C"
-
 alias --save imazing iMazing
+alias --save code code-insiders

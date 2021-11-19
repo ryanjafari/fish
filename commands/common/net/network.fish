@@ -1,7 +1,5 @@
 #!/opt/home/.local/bin/env /opt/home/.local/bin/fish
 
-log4f --type=i "Loading 📶 network commands..."
-
 # sudo ip route add 172.16.0.0/24 dev br-$(sudo docker network inspect pi-hole_default |jq -r '.[0].Id[0:12]') table lan_routable
 # sudo ip route add 172.16.0.0/24 dev br-$(sudo docker network inspect pi-hole_default |jq -r '.[0].Id[0:12]') table wan_routable
 
@@ -188,7 +186,7 @@ funcsave _net_mount_share
 
 function get_local_ip \
     --description "Gets current local IP address."
-    ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
+    ifconfig eth0 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
 end
 funcsave get_local_ip
 
@@ -338,36 +336,3 @@ funcsave open_ssh_tunnel_from_to
 #
 # end
 # funcsave flush_sshd
-
-function _net_reset_iptables
-    printf "=> Resetting ip(6)tables...\n"
-
-    # TODO: convert to iptables-nft
-
-    # Clear iptables rules:
-
-    iptables -P INPUT ACCEPT
-    iptables -P FORWARD ACCEPT
-    iptables -P OUTPUT ACCEPT
-    iptables -t nat -F
-    iptables -t mangle -F
-    iptables -F
-    iptables -X
-
-    # Clear ip6tables rules:
-
-    ip6tables -P INPUT ACCEPT
-    ip6tables -P FORWARD ACCEPT
-    ip6tables -P OUTPUT ACCEPT
-    ip6tables -t nat -F
-    ip6tables -t mangle -F
-    ip6tables -F
-    ip6tables -X
-
-    printf "=> Done.\n"
-
-    printf "=> Resetting ipvs...\n"
-    ipvsadm --clear
-    printf "=> Done.\n"
-end
-funcsave _net_reset_iptables

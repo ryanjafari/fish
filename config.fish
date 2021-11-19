@@ -39,8 +39,9 @@ source ~/.config/fish/initializers/os_$mf_os.fish
 log4f --type=i "Loading 🚸 cross-OS functions..."
 
 source "$mf_commands_common_path/security.fish"
-source "$mf_commands_common_path/network.fish"
-source "$mf_commands_common_path/kubernetes.fish"
+source "$mf_commands_common_path/net/_import.fish"
+source "$mf_commands_common_path/filesystem.fish"
+source "$mf_commands_common_path/k8s/_import.fish"
 
 # sources (glob $mf_commands_common_path/*)
 # source (which env_parallel.fish)
