@@ -7,3 +7,6 @@ logs
 # files:
 fish_plugins
 fish_variables
+
+# vscode workspace:
+my-fish-*.code-workspace
