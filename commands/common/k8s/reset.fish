@@ -38,4 +38,4 @@ function _k8s_reset_system
     # rm -rf /var/lib/dockershim
     # rm -rf /var/lib/containers >/dev/null 2>&1
 end
-funcsave _k8s_reset
+funcsave _k8s_reset_system
