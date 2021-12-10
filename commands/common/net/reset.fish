@@ -26,7 +26,7 @@ function _net_reset_iptables
     ip6tables -F
     ip6tables -X
 
-    log4f --type=n "Clearing ipvs..."
+    log4f --type=n "Resetting ipvs..."
     ipvsadm --clear
 end
 funcsave _net_reset_iptables

@@ -126,7 +126,7 @@ function handle_subcommand \
                 # TODO: exec?
                 $cmd_coo $cmd_arg
             else
-                log4f --type=i "No arguments were passed!"
+                log4f --type=d "No arguments were passed!"
                 $cmd_coo
             end
         else

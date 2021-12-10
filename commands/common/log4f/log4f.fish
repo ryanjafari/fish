@@ -44,9 +44,11 @@ function log4f \
     if test $has_var_flag -eq 0 -o $has_type_flag -eq 0
         # TODO: add --type= here and make one method
         # instead of *_var and *_msg
-        _log4f_log_var $to_log
+        # _log4f_log_var $to_log
     else
-        _log4f_log_msg --type=$_flag_type $to_log
+        if [ $_flag_type != "d" ]
+            _log4f_log_msg --type=$_flag_type $to_log
+        end
     end
 end
 funcsave log4f
