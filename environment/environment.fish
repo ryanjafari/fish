@@ -36,3 +36,10 @@ set --global --export MF_FISH_VERSION "🐟$FISH_VERSION"
 
 # who needed this?
 set --global --export FISH_CONFIG_ROOT "~/.config/fish"
+
+set --export TALOS_EDITOR "/opt/homebrew/bin/code-insiders --wait"
+
+#fish_add_path --prepend "/opt/homebrew/opt/ccache/libexec"
+
+source $HOME/.config/fish/environment/homebrew.fish
+

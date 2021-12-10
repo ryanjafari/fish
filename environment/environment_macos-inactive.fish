@@ -27,7 +27,7 @@ fish_add_path --prepend "$HOME/.local/bin"
 fish_add_path --prepend "$homebrew/bin"
 fish_add_path --prepend "$homebrew/sbin"
 
-set homebrew "$homebrew/opt"
+# set homebrew "$homebrew/opt"
 
 # TODO: loop through all libexecs and add to path?
 # TODO: separate file?
@@ -35,52 +35,46 @@ set homebrew "$homebrew/opt"
 # made available in the above folders due to
 # naming collisions:
 # fish_add_path --prepend $homebrew/llvm/bin
-fish_add_path --prepend "$homebrew/ssh-copy-id/bin"
-fish_add_path --prepend "$homebrew/libressl/bin"
-fish_add_path --prepend "$homebrew/openssl@1.1/bin"
-fish_add_path --prepend "$homebrew/flex/bin"
-fish_add_path --prepend "$homebrew/bzip2/bin"
-fish_add_path --prepend "$homebrew/unzip/bin"
-fish_add_path --prepend "$homebrew/python/libexec/bin"
-fish_add_path --prepend "$homebrew/grep/libexec/gnubin"
-fish_add_path --prepend "$homebrew/make/libexec/gnubin"
-fish_add_path --prepend "$homebrew/gnu-tar/libexec/gnubin"
-fish_add_path --prepend "$homebrew/gnu-sed/libexec/gnubin"
-fish_add_path --prepend "$homebrew/curl/bin"
+# fish_add_path --prepend "$homebrew/ssh-copy-id/bin"
+# fish_add_path --prepend "$homebrew/libressl/bin"
+# fish_add_path --prepend "$homebrew/openssl@1.1/bin"
+# fish_add_path --prepend "$homebrew/flex/bin"
+# fish_add_path --prepend "$homebrew/bzip2/bin"
+# fish_add_path --prepend "$homebrew/unzip/bin"
+# fish_add_path --prepend "$homebrew/python/libexec/bin"
+# fish_add_path --prepend "$homebrew/grep/libexec/gnubin"
+# fish_add_path --prepend "$homebrew/make/libexec/gnubin"
+# fish_add_path --prepend "$homebrew/gnu-tar/libexec/gnubin"
+# fish_add_path --prepend "$homebrew/gnu-sed/libexec/gnubin"
+# fish_add_path --prepend "$homebrew/curl/bin"
 
 # Warning: Putting non-prefixed coreutils in your path can cause GMP builds to fail.
-fish_add_path --prepend "$homebrew/coreutils/libexec/gnubin"
+# fish_add_path --prepend "$homebrew/coreutils/libexec/gnubin"
 
 # TODO: decide if i need to have these as well
 # and if so what order they should be in
-fish_add_path --prepend "$homebrew/e2fsprogs/bin"
-fish_add_path --prepend "$homebrew/e2fsprogs/sbin"
-fish_add_path --prepend "$homebrew/icu4c/bin"
-fish_add_path --prepend "$homebrew/icu4c/sbin"
-fish_add_path --prepend "$homebrew/libiconv/bin"
+# fish_add_path --prepend "$homebrew/e2fsprogs/bin"
+# fish_add_path --prepend "$homebrew/e2fsprogs/sbin"
+# fish_add_path --prepend "$homebrew/icu4c/bin"
+# fish_add_path --prepend "$homebrew/icu4c/sbin"
+# fish_add_path --prepend "$homebrew/libiconv/bin"
 
 # Add iMazing CLI to $PATH:
-fish_add_path --prepend "/Applications/iMazing.app/Contents/MacOS"
+# fish_add_path --prepend "/Applications/iMazing.app/Contents/MacOS"
 
 # VS Code as editor when terminal needs one:
 set --export EDITOR /opt/homebrew/bin/code
 
 # SSH Config Editor.app config:
-# set --export SSH_AUTH_SOCK "$HOME/Library/Containers/org.hejki.osx.sshce.agent/Data/socket.ssh"
-
-# Secretive.app:
-# set --export SSH_AUTH_SOCK "$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
-
-# SeKey.app:
-# set --export SSH_AUTH_SOCK "$HOME/.sekey/ssh-agent.ssh"
+set --export SSH_AUTH_SOCK "$HOME/Library/Containers/org.hejki.osx.sshce.agent/Data/socket.ssh"
 
 # TODO: move to common environment variables?
 # Set the license key for Cloudflare WARP+ / 1.1.1.1 app:
 # TODO: https://bit.ly/3luEoNM, https://git.io/JReiJ
 # TODO: https://git.io/JRei0
 # TODO: malware block?
-set --export WGCF_LICENSE_KEY 25QX1r7B-Lbv6581U-9yE34g2O
-and wgcf update --config "$HOME/.wgcf-account.toml"
+# set --export WGCF_LICENSE_KEY 25QX1r7B-Lbv6581U-9yE34g2O
+# and wgcf update --config "$HOME/.wgcf-account.toml"
 
 # log4f --type=i "Setting up 🔑 1Password..."
 
